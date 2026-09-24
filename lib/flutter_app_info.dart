@@ -1,5 +1,5 @@
 /// Primary library for accessing [AppInfo] and [AppInfoData]
-library flutter_app_info;
+library;
 
 import 'package:flutter_app_info/flutter_app_info.dart';
 import 'package:flutter_app_info/src/index.dart';

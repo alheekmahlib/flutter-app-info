@@ -58,8 +58,9 @@ class AppPlatformInfo extends AppInfoBase {
   final String executable = kIsWeb ? '' : Platform.executable;
 
   /// These are the command-line flags to the executable that precedes the script name. Provides a new list every time the value is read (see [Platform.executableArguments])
-  final List<String> executableArguments =
-      kIsWeb ? [] : Platform.executableArguments;
+  final List<String> executableArguments = kIsWeb
+      ? []
+      : Platform.executableArguments;
 
   /// The local hostname for the system (see [Platform.localHostname])
   final String localHostname = kIsWeb ? '' : Platform.localHostname;
@@ -74,8 +75,9 @@ class AppPlatformInfo extends AppInfoBase {
   final String operatingSystem = kIsWeb ? '' : Platform.operatingSystem;
 
   /// A string representing the version of the operating system or platform (see [Platform.operatingSystemVersion])
-  final String operatingSystemVersion =
-      kIsWeb ? '' : Platform.operatingSystemVersion;
+  final String operatingSystemVersion = kIsWeb
+      ? ''
+      : Platform.operatingSystemVersion;
 
   /// The --packages flag passed to the executable used to run the script in this isolate (see [Platform.packageConfig])
   final String packageConfig = kIsWeb ? '' : Platform.packageConfig ?? '';

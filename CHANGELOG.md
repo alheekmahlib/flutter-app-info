@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.0.0
+
+* Update to `device_info_plus: ^13.2.0` (breaking)
+* Update to `package_info_plus: ^10.2.1` (breaking)
+* Update to `universal_io: ^2.3.1`
+* Update to `version: ^3.0.2`
+* Update to `very_good_analysis: ^11.0.0` and resolve new lints
+* Raise minimum Dart SDK to `3.12.2` (breaking)
+* Use the binding's implicit view instead of `PlatformDispatcher.instance.views.first` for target info, which is well defined with multiple views and testable
+* Add unit and widget test coverage
+
 ## 3.0.3
 
 * Loosen version constraints for dependencies

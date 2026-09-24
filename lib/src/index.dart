@@ -1,4 +1,4 @@
-library app_device;
+library;
 
 import 'dart:convert';
 

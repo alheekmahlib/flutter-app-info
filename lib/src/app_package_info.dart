@@ -23,7 +23,7 @@ class AppPackageInfo extends AppInfoBase {
     // Parse version (may contain build)
     try {
       version = Version.parse(versionString);
-    } catch (e) {
+    } on Exception catch (e) {
       version = Version.parse('0');
       if (kDebugMode) {
         print('Error parsing package version ("$versionString") - $e');
@@ -32,7 +32,7 @@ class AppPackageInfo extends AppInfoBase {
     // Parse version without build
     try {
       versionWithoutBuild = Version.parse(_info.version);
-    } catch (e) {
+    } on Exception catch (e) {
       versionWithoutBuild = Version.parse('0');
       if (kDebugMode) {
         print('Error parsing package version ("${_info.version}") - $e');

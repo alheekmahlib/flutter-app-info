@@ -18,6 +18,7 @@ abstract class AppInfoBase {
         data[k] = encoder.convert(toJson());
       }
     }
+    // Printing is the purpose of this method.
     // ignore: avoid_print
     print(encoder.convert(toJson()));
   }
@@ -48,14 +49,15 @@ class AppInfoData {
   static Future<AppInfoData> get() async {
     WidgetsFlutterBinding.ensureInitialized();
     return AppInfoData._(
-      package: AppPackageInfo._(
-        data: await PackageInfo.fromPlatform(),
-      ),
-      platform: AppPlatformInfo._(
-        data: await DeviceInfoPlugin().deviceInfo,
-      ),
+      package: AppPackageInfo._(data: await PackageInfo.fromPlatform()),
+      platform: AppPlatformInfo._(data: await DeviceInfoPlugin().deviceInfo),
       target: AppTargetInfo._(
-        data: MediaQueryData.fromView(PlatformDispatcher.instance.views.first),
+        // The implicit view is the primary full-screen view and, unlike
+        // `PlatformDispatcher.instance.views.first`, is well defined when
+        // more than one view exists.
+        data: MediaQueryData.fromView(
+          WidgetsBinding.instance.platformDispatcher.implicitView!,
+        ),
       ),
     );
   }
@@ -68,44 +70,40 @@ class AppInfoData {
 /// [InheritedWidget] to distribute [AppInfoData] to application widget tree
 class AppInfo extends InheritedWidget {
   /// Create an [AppInfo] InheritedWidget with [AppInfoData] instance
-  const AppInfo({
-    required this.data,
-    required super.child,
-    super.key,
-  });
+  const AppInfo({required this.data, required super.child, super.key});
 
   /// Instance of [AppInfoData] provided by [AppInfo] [InheritedWidget]
   final AppInfoData data;
 
   /// Denotes app was built for web, same as [kIsWeb]
   // ignore: prefer_const_declarations
-  static final isWeb = kIsWeb;
+  static final bool isWeb = kIsWeb;
 
   /// Denotes app was built for a desktop platform
-  static final isDesktopPlatform =
+  static final bool isDesktopPlatform =
       Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 
   /// Denotes app was built for a mobile platform
-  static final isMobilePlatform = Platform.isAndroid || Platform.isIOS;
+  static final bool isMobilePlatform = Platform.isAndroid || Platform.isIOS;
 
   /// Denotes app is running for a desktop target
-  static final isDesktopTarget = [
+  static final bool isDesktopTarget = [
     TargetPlatform.linux,
     TargetPlatform.macOS,
     TargetPlatform.windows,
   ].contains(defaultTargetPlatform);
 
   /// Denotes app was built for web and is running on a desktop browser
-  static final isDesktopWebTarget = isWeb && isDesktopTarget;
+  static final bool isDesktopWebTarget = isWeb && isDesktopTarget;
 
   /// Denotes app is running for a mobile target
-  static final isMobileTarget = [
+  static final bool isMobileTarget = [
     TargetPlatform.iOS,
     TargetPlatform.android,
   ].contains(defaultTargetPlatform);
 
   /// Denotes app was built for web and is running on a mobile browser
-  static final isMobileWebTarget = isWeb && isMobileTarget;
+  static final bool isMobileWebTarget = isWeb && isMobileTarget;
 
   /// Returns an instance of [AppInfoData] from [AppInfo] InheritedWidget
   static AppInfoData of(BuildContext context) {
